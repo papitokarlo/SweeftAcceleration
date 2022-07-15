@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="text-center mb-3">{% block title %} SHORTNER - home  {% endblock %}</h1>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <form method="post" action="{{url_for('index')}}">
+                <div class="form-floating mb-3">
+                    <input type="url" name="url" id="url" 
+                        placeholder="Enter looooooooooooong URL" class="form-control"
+                        value="{{ request.form['url'] }}" autofocus></input>
+                    <label for="url">URL</label>
+                </div>
+                <!-- Large button groups (default and split) -->
+                <div class="form-group text-center" style ="margin-bottom:18%">
+                    <button class="btn btn-secondary btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    ACCESS TO PREMIUM 
+                    </button>
+                    <div class="dropdown-menu">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="custom_id" id="custom_id"
+                                placeholder="Want to customise? (optional)" class="form-control"
+                                value="{{ request.form['custom_id'] }}"></input>
+                            <label for="custom_id">Custom Short ID</label>
+                        </div>
+                    </div>
+                </div>             
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-lg btn-primary">SUBMIT</button>
+                </div>
+            </form>
+
+            {% if short_url %}
+            <hr>
+            <span><a href="{{ short_url }}" target="_blank">{{ short_url }}</a></span>
+            <hr>
+            {% endif %}
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">ORIGINAK</th>
+                    <th scope="col">SHORT</th>
+                    <th scope="col">CLICKS</th>
+                    <th scope="col">CREATE DATE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for url in short %}
+                        <tr>
+                            <th scope="row">{{ url.id }}</th>
+                            <td>{{ url.original_url }}</td>
+                            <td><a href="{{url.short_id}}"  target="_blank" >127.0.0.1:5000/{{url.short_id }}</a></td>
+                            <td > {{ url.access_counter }}</td>
+                            <td>{{ url.time}}</td>
+                        </tr>
+                        
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-2"></div>
+    </div>
+    
+{% endblock %}
