@@ -111,9 +111,9 @@ def index():
 def redirect_url(short_id):
     link = ShortUrls.query.filter_by(short_id=short_id).first()
     #ბაზაში ზრდის წვდომების რაოდენობას ამ ლინკზე
-    if link.access_counter:
-        link.access_counter+=1
-        db.session.commit()
+#     if link.access_counter:
+    link.access_counter+=1
+    db.session.commit()
 
     if link:
         return redirect(link.original_url)
